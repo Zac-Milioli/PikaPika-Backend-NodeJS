@@ -36,7 +36,11 @@ app.get('/api/:keyword', async (req, res) => {
         const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name).join(', ');
         const pokemonImg = pokemonData.sprites.front_default;
 
-        res.json({ pokemonNome, pokemonPokedex, pokemonTipo, pokemonImg });
+        res.json({ message: 'Informações do Pokemon número ' + pokemonPokedex, 
+            pokemonNome, 
+            pokemonPokedex, 
+            pokemonTipo, 
+            pokemonImg });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar Pokémon', error: error.message });
     }
