@@ -1,0 +1,36 @@
+body {
+    background-image: url(./assets/fundo1.png);
+    overflow: hidden;
+    background-size: cover;
+    gap: 1px;
+  }
+  
+  .pkHeader {
+    background-color: #951010;
+    color: white;
+    border-radius: 10px;
+    justify-content: center;
+    padding: 8px;
+  }
+  
+  .caixa {
+    text-align: center;
+    background-color: #951010;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    margin: 8px;
+    max-width: calc(100% - 16px); /* Margem de 8px de cada lado */
+    box-sizing: border-box;
+  }
+  
+  .pkImage {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    max-height: 100vh; /* Limita a altura da imagem */
+    object-fit: cover; /* A imagem se ajusta proporcionalmente */
+    z-index: 1; /* Mantém a imagem no fundo */
+  }
+  
