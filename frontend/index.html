@@ -1,1 +1,24 @@
-<!-- O FRONTEND SERÁ DESENVOLVIDO DENTRO DESTE DIRETORIO -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="pkHeader">Pokédex</h1>
+    <div class="caixa">
+        <label for="pkInput">Digite o nome ou número do Pokémon:</label>
+        <input type="text" id="pkInput" placeholder="Nome ou número">
+        <button onclick="fetchPokemon()">Buscar</button>
+    <div id="pkInfo" class="pokemon-info">
+            <img id="pkImage" src="./assets/pokemon.png" alt="Imagem do Pokémon" class="hidden">
+            <h2 id="pokemonName" class="hidden"></h2>
+            <div id="pokemonTypes" class="types hidden"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
