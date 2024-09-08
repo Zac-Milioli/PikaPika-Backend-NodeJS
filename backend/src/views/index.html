@@ -4,32 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem vindo!</title>
-    <style>
+    <style class="resetcss">
+        /* http://meyerweb.com/eric/tools/css/reset/ 
+        v2.0 | 20110126
+        License: none (public domain)
+        */
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed, 
+        figure, figcaption, footer, header, hgroup, 
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure, 
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
         body {
-            background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%); /* Fundo da Pokébola */
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    </style>
+    <style class="stylecss">
+        html {
+            height: 100% ;
+        }
+        body {
+            background: no-repeat linear-gradient(to bottom, #ff0000 0 48%, #000000  0 50%, #ffffff 0 52%); /* Fundo da Pokébola */
+            height: 100%;
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-            text-align: center;
-            position: relative;
         }
         h1 {
-            font-size: 8em;
+            font-size: 6em;
             color: #000000; /* Cor preta para contraste */
             animation: fadeIn 3s ease-in-out;
-            margin-top: -100px; /* Ajuste a margem superior para posicionar o título mais para cima */
-        }
+        }   
         p {
-            font-size: 1.2em;
+            font-size: 2em;
             color: #000000;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         .pokeball-button {
             position: absolute;
@@ -41,33 +85,28 @@
             background-color: #ffffff;
             border: 10px solid #000000;
             border-radius: 50%;
-            box-shadow: 0 0 0 10px #000000;
+            box-shadow: 0 0 0 4px #000000;
         }
-        .pokeball-line {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background-color: #000000;
-            transform: translateY(-50%);
+        section {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            justify-content: space-around;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="pokeball-line"></div>
-    <div class="pokeball-button"></div>
-    <h1>Bem vindo!</h1>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <p>Desenvolvido por Zac Milioli, Eduardo Kipper, Pedro Esmeraldino, Gabriel Antonio Maida</p>
+    <section>
+        <h1>Bem vindo ao PikaPika!</h1>
+        <p>Desenvolvido por: Zac Milioli, Eduardo Kipper, Pedro Esmeraldino, Gabriel Antônio</p>
+    </section>
+    <!-- O botão da pokebola faz o get em home, abrindo o index.html da pasta frontend junto do style.css e index.js-->
+    <a href="http://localhost:5000" class="pokeball-button"></a>
 </body>
 </html>
