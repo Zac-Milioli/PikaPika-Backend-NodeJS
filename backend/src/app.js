@@ -87,7 +87,7 @@ app.get('/team', (req, res) => {
 
 
 // Método para remover um ou todos os Pokémons do time
-app.delete('/api/:nomePokemon', (req, res) => {
+app.delete('/team/:nomePokemon', (req, res) => {
     const { nomePokemon } = req.params;
 
     const index = team.findIndex(pokemon => pokemon.nome === nomePokemon);
