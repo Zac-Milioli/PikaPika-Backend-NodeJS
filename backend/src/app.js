@@ -51,6 +51,9 @@ app.get('/api/:keyword', async (req, res) => {
             pokemonTipo, 
             pokemonImg });
     } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return res.status(404).json({ message: 'Pokémon não encontrado na PokeAPI' });
+        }
         res.status(500).json({ message: 'Erro ao buscar Pokémon', error: error.message });
     }
 });
@@ -61,7 +64,7 @@ app.post('/api/:keyword', async (req, res) => {
 
     // Verifica se o time já possui 6 Pokémons
     if (team.length >= 6) {
-        return res.status(400).json({ message: 'Seu time já possui o limite de 6 Pokémons.', team });
+        return res.status(409).json({ message: 'Seu time já possui o limite de 6 Pokémons.', team });
     }
 
     try {
@@ -80,7 +83,7 @@ app.post('/api/:keyword', async (req, res) => {
         };
         team.push(pokemon); // Adiciona o Pokémon na lista team
 
-        res.json({ message: 'Pokémon adicionado ao time com sucesso', team });
+        res.status(201).json({ message: 'Pokémon adicionado ao time com sucesso', team });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao adicionar Pokémon ao time', error: error.message });
     }
