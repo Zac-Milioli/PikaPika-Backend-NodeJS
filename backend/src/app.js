@@ -60,7 +60,7 @@ app.post('/api/:keyword', async (req, res) => {
     const { keyword } = req.params;
 
     // Verifica se o time já possui 6 Pokémons
-    if (team.length == 6) {
+    if (team.length >= 6) {
         return res.status(400).json({ message: 'Seu time já possui o limite de 6 Pokémons.', team });
     }
 
