@@ -41,7 +41,7 @@ app.get('/api/:keyword', async (req, res) => {
         // Extrai as informações necessárias do Pokémon
         const pokemonNome = pokemonData.name;
         const pokemonPokedex = pokemonData.id;
-        const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name).join(', ');
+        const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name);
         const pokemonImg = pokemonData.sprites.front_default;
 
         // Retorna as informações do Pokémon em formato JSON
@@ -63,7 +63,7 @@ app.post('/api/:keyword', async (req, res) => {
         const pokemonData = response.data;
 
         const pokemonNome = pokemonData.name;
-        const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name).join(', ');
+        const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name);
         const pokemonImg = pokemonData.sprites.front_default;
 
         // Variavel onde são armazenados os dados (nome, tipo e img) do pokemon
