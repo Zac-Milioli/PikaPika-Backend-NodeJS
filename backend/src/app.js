@@ -85,8 +85,7 @@ app.get('/team', (req, res) => {
     res.json(team);
 });
 
-
-// Método para remover um ou todos os Pokémons do time
+// Método para remover um Pokémon do time
 app.delete('/team/:nomePokemon', (req, res) => {
     const { nomePokemon } = req.params;
 
@@ -96,7 +95,7 @@ app.delete('/team/:nomePokemon', (req, res) => {
         // Remove o Pokémon do array
         team.splice(index, 1);
 
-        res.json({ message: 'Pokémon removido do time com sucesso', team });
+        res.json({ message: nomePokemon+' removido do time com sucesso', team });
     } else {
         res.status(404).json({ message: 'Pokémon não encontrado' });
     }
