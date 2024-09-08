@@ -89,8 +89,11 @@ app.get('/team', (req, res) => {
 app.delete('/team/:nomePokemon', (req, res) => {
     const { nomePokemon } = req.params;
 
+    // Procura o Pokémon no time e armazena seu índice
+    // O índice -1 indica que o Pokémon não foi encontrado
     const index = team.findIndex(pokemon => pokemon.nome === nomePokemon);
 
+    // Verifica se o Pokémon foi encontrado
     if (index !== -1) {
         // Remove o Pokémon do array
         team.splice(index, 1);
