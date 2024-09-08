@@ -10,14 +10,18 @@ async function getTeam() {
         let pokeTeam = document.getElementById('pokeTeam');
         pokeTeam.innerHTML = ""; //Limpa a div do time para evitar de ficar repetindo
         for (let i = 0; i < result.length; i++) {
-            // Cria um novo elemento de imagem com a sprite do pokemon, texto alternativo e titulo contendo o nome do pokemon
+    
+            // Cria um novo elemento de imagem com a sprite do pokemon, texto alternativo, id e titulo contendo o nome do pokemon
             let img = document.createElement('img');
             img.src = result[i].img;
             img.alt = `foto ${result[i].nome}`;
+            img.id = result[i].nome;
             img.title = result[i].nome;
             img.height = 60;// Define a altura da imagem para 60 px
-            
-            
+            img.onclick = function() {
+                deletePokemon(img.id); // Passa o id da imagem (nome do pokemon) como parametro para a função deletePokemon
+            }; // Deleta o pokemon do time ao clicar
+
             pokeTeam.appendChild(img); // Adiciona a imagem dentro da div pokeTeam
         };
         return result;
@@ -45,4 +49,16 @@ async function postPokemon() {
     }else if(team.length == 6){
         alert("o time não pode conter mais que 6 pokemon")
     }
+}
+
+async function deletePokemon(pokemon) {
+    try {
+        const response = await fetch(`${url}/team/${pokemon}`, {
+            method: 'DELETE',
+        });
+        getTeam()
+    } catch (error) {
+        console.error('Error:', error.message); // Não está retornando o erro não sei o pq
+    }
+
 }
