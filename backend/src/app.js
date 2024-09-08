@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors());
 
-let team = [] // Cria uma lista vazia de pokemons
+let team = {}
 
 app.get('/', (req, res) => {
     res.sendFile('views/index.html', { root: __dirname });
@@ -57,13 +57,10 @@ app.post('/api/:keyword', async (req, res) => {
         const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name).join(', ');
         const pokemonImg = pokemonData.sprites.front_default;
 
-        // Variavel onde são armazenados os dados (nome, tipo e img) do pokemon
-        let pokemon = {
-            nome: pokemonNome,
+        team[pokemonNome] = {
             tipo: pokemonTipo,
             img: pokemonImg
         };
-        team.push(pokemon); // Adiciona o pokemon na lista team
 
         res.json({ message: 'Pokémon adicionado ao time com sucesso', team });
     } catch (error) {
