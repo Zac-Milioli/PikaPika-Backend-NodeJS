@@ -9,7 +9,7 @@ const app = express();
 // Configura o CORS para permitir requisições apenas da porta 4000
 app.use(cors());
 
-let team = [] // Cria uma lista vazia para armazenar os pokemons do time
+let team = [] // Cria uma lista vazia para armazenar os Pokémons do time
 
 // Método para retornar a página inicial
 app.get('/', (req, res) => {
@@ -66,13 +66,13 @@ app.post('/api/:keyword', async (req, res) => {
         const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name);
         const pokemonImg = pokemonData.sprites.front_default;
 
-        // Variavel onde são armazenados os dados (nome, tipo e img) do pokemon
+        // Variável onde são armazenados os dados (nome, tipo e img) do Pokémon
         let pokemon = {
             nome: pokemonNome,
             tipo: pokemonTipo,
             img: pokemonImg
         };
-        team.push(pokemon); // Adiciona o pokemon na lista team
+        team.push(pokemon); // Adiciona o Pokémon na lista team
 
         res.json({ message: 'Pokémon adicionado ao time com sucesso', team });
     } catch (error) {
@@ -80,9 +80,26 @@ app.post('/api/:keyword', async (req, res) => {
     }
 });
 
-// Método para retornar o time com os pokemons
+// Método para retornar o time com os Pokémons
 app.get('/team', (req, res) => {
     res.json(team);
+});
+
+
+// Método para remover um ou todos os Pokémons do time
+app.delete('/api/:nomePokemon', (req, res) => {
+    const { nomePokemon } = req.params;
+
+    const index = team.findIndex(pokemon => pokemon.nome === nomePokemon);
+
+    if (index !== -1) {
+        // Remove o Pokémon do array
+        team.splice(index, 1);
+
+        res.json({ message: 'Pokémon removido do time com sucesso', team });
+    } else {
+        res.status(404).json({ message: 'Pokémon não encontrado' });
+    }
 });
 
 // Constante que armazena a porta do servidor
