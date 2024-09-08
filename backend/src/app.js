@@ -41,6 +41,7 @@ app.post('/api/:keyword', async (req, res) => {
             img: pokemonImg
         };
         team.push(pokemon);
+        
         res.json({ message: 'Pokémon adicionado ao time com sucesso', team });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao adicionar Pokémon ao time', error: error.message });
