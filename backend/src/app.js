@@ -1,17 +1,22 @@
+// Importa as bibliotecas necessárias
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 
+// Cria uma instância do express
 const app = express();
 
+// Configura o CORS para permitir requisições apenas da porta 4000
 app.use(cors());
 
-let team = [] // Cria uma lista vazia de pokemons
+let team = [] // Cria uma lista vazia para armazenar os pokemons do time
 
+// Método para retornar a página inicial
 app.get('/', (req, res) => {
     res.sendFile('views/index.html', { root: __dirname });
 });
 
+// Define um objeto com os integrantes do grupo
 const data = {
     integrantes: [
         { nome: 'Zac Milioli' },
@@ -21,21 +26,25 @@ const data = {
     ]
 };
 
+// Método para retornar os integrantes do grupo
 app.get('/integrantes', (req, res) => {
     res.json(data);
 });
 
+// Método para buscar informações de um Pokémon
 app.get('/api/:keyword', async (req, res) => {
-    const { keyword } = req.params;
+    const { keyword } = req.params; // Armazena o parâmetro da URL em uma variável
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`);
-        const pokemonData = response.data;
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`); // Faz a requisição para a API do Pokémon
+        const pokemonData = response.data; // Armazena os dados do Pokémon
 
+        // Extrai as informações necessárias do Pokémon
         const pokemonNome = pokemonData.name;
         const pokemonPokedex = pokemonData.id;
         const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name).join(', ');
         const pokemonImg = pokemonData.sprites.front_default;
 
+        // Retorna as informações do Pokémon em formato JSON
         res.json({ message: 'Informações do Pokemon número ' + pokemonPokedex, 
             pokemonNome, 
             pokemonPokedex, 
@@ -46,7 +55,7 @@ app.get('/api/:keyword', async (req, res) => {
     }
 });
 
-
+// Método para adicionar um Pokémon ao time
 app.post('/api/:keyword', async (req, res) => {
     const { keyword } = req.params;
     try {
@@ -71,11 +80,15 @@ app.post('/api/:keyword', async (req, res) => {
     }
 });
 
+// Método para retornar o time com os pokemons
 app.get('/team', (req, res) => {
     res.json(team);
 });
 
+// Constante que armazena a porta do servidor
 const PORT = 3000;
+
+// Inicia o servidor na porta especificada
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
