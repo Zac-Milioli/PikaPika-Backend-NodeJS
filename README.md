@@ -26,7 +26,7 @@ npm install
 Inicie o backend
 
 ```bash
-npm start
+node app.js
 ```
 
 </details>
@@ -48,7 +48,7 @@ npm install
 Inicie o frontend
 
 ```bash
-npm start
+node run.js
 ```
 
 </details>
