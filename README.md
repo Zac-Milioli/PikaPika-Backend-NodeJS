@@ -1,20 +1,20 @@
 # Projeto PikaPika
 
 ## Feito por
-Zac Milioli, Eduardo Kipper, Pedro Esmeraldino, Gabriel Antonio Maida
+[Zac Milioli](https://www.linkedin.com/in/zac-milioli/), [Eduardo Kipper](https://www.linkedin.com/in/eduardo-kipper-3451771a4/), [Pedro Esmeraldino](https://www.linkedin.com/in/pedro-esmeraldino-922b82214/), [Gabriel Antonio Maida](https://github.com/GabrielMaida)
 
 ## Como utilizar
 
 O sistema funciona executando o backend e o frontend de forma separada.
 
-Eis as instruções para executar o sistema completo:
+Siga as instruções para executar o sistema completo:
 
 <details><summary>Backend</summary>
 
 Abra um terminal na raíz do projeto e navegue até a pasta "backend" através do terminal
     
 ```bash 
-cd backend
+cd backend\src
 ```
 
 Instale as dependências do backend
