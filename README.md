@@ -1,7 +1,7 @@
 # Projeto PikaPika
 
 ## Feito por
-[Zac Milioli](https://www.linkedin.com/in/zac-milioli/), [Eduardo Kipper](https://www.linkedin.com/in/eduardo-kipper-3451771a4/), [Pedro Esmeraldino](https://www.linkedin.com/in/pedro-esmeraldino-922b82214/), [Gabriel Antonio Maida](https://github.com/GabrielMaida)
+[Zac Milioli](https://www.linkedin.com/in/zac-milioli/), [Eduardo Kipper](https://www.linkedin.com/in/eduardo-kipper-3451771a4/), [Pedro Esmeraldino](https://www.linkedin.com/in/pedro-esmeraldino-922b82214/), [Gabriel Antonio Maida](https://www.linkedin.com/in/gabrielmaida/)
 
 ## Como utilizar
 
