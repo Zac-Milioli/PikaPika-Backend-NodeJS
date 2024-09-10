@@ -114,7 +114,7 @@ app.delete('/team/:nomePokemon', (req, res) => {
 });
 
 // Constante que armazena a porta do servidor
-const PORT = 3000;
+const PORT = 3300;
 
 // Inicia o servidor na porta especificada
 app.listen(PORT, () => {
