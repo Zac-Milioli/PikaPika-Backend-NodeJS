@@ -35,21 +35,28 @@ app.get('/integrantes', (req, res) => {
 app.get('/api/:keyword', async (req, res) => {
     const { keyword } = req.params; // Armazena o parâmetro da URL em uma variável
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`); // Faz a requisição para a API do Pokémon
-        const pokemonData = response.data; // Armazena os dados do Pokémon
+        const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`); // Faz a requisição para a API do Pokémon
+        const pokemonData = pokeApi.data; // Armazena os dados do Pokémon
+
+        const tcgApi = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:${pokemonData.name}`)
+        const tcgData = tcgApi.data
+
+
 
         // Extrai as informações necessárias do Pokémon
         const pokemonNome = pokemonData.name;
         const pokemonPokedex = pokemonData.id;
         const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name);
         const pokemonImg = pokemonData.sprites.front_default;
+        const cardImg = tcgData.data.length > 0 ? tcgData.data[0].images.large : null;
 
         // Retorna as informações do Pokémon em formato JSON
         res.json({ message: 'Informações do Pokemon número ' + pokemonPokedex, 
             pokemonNome, 
             pokemonPokedex, 
             pokemonTipo, 
-            pokemonImg });
+            pokemonImg,
+            cardImg });
     } catch (error) {
         if (error.response && error.response.status === 404) {
             return res.status(404).json({ message: 'Pokémon não encontrado na PokeAPI' });

@@ -35,6 +35,7 @@ function App() {
         name: result.pokemonNome,
         id: result.pokemonPokedex,
         image: result.pokemonImg,
+        cardImage: result.cardImg,
         types: result.pokemonTipo,
       }); // Atualiza os dados do Pokemon selecionado
       setPokemonInput(''); // Limpa o campo de entrada
@@ -98,7 +99,7 @@ function App() {
           ))}
         </div>
 
-        <h4>Buscar Pokemon:</h4>
+        <h4 className='mt-2'>Buscar Pokemon:</h4>
         <div className="container row">
           <div className="col-10">
             <input
@@ -116,11 +117,18 @@ function App() {
         </div>
 
         {pokemonData && (
-          <div id="pokemonSearched" className="container mx-auto pokemonSearched">
+          <div id="pokemonSearched" className="container mx-auto pokemonSearched mt-5">
             <img
               id="pokemonImage"
               className="mx-auto"
               src={pokemonData.image}
+              alt={pokemonData.name}
+              height="300px"
+            />
+            <img
+              id="cardImage"
+              className="mx-auto"
+              src={pokemonData.cardImage}
               alt={pokemonData.name}
               height="300px"
             />
