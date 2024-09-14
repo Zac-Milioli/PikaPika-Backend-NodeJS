@@ -1,0 +1,28 @@
+{
+  "name": "aplicacao-devops",
+  "version": "1.0.0",
+  "description": "PikaPika - Aplicação Web para Criação de times de Pokémon",
+  "main": "backend/src/app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zac-Milioli/aplicacao-devops.git"
+  },
+  "author": "Eduardo Kipper, Gabriel Antônio, Pedro Esmeraldino, Zac Milioli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zac-Milioli/aplicacao-devops/issues"
+  },
+  "homepage": "https://github.com/Zac-Milioli/aplicacao-devops#readme",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "create-react-app": "^5.0.1",
+    "express": "^4.20.0"
+  }
+}
