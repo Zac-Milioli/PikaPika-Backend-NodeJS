@@ -5,7 +5,7 @@
 
 ## Como utilizar
 
-O sistema funciona executando o Back-End e o Front-End de formas separadas. Para isso, siga as intruções:
+O sistema funciona executando o Back-End e o Front-End de formas separadas. Este repositório se refere ao Backend, para utilizá-lo siga as intruções:
 
 
 Primeiramente, abra um terminal na raíz do projeto e execute os comandos:
@@ -14,15 +14,9 @@ npm install
 
 node backend/src/app.js
 ```
+
 Com isso, o Back estará disponível e rodando na porta 3300 -> `http://localhost:3300/`.
 
-Para executar o Front, abra outro terminal na raiz do projeto, navegue até a pasta ```frontend\pikapika-react``` e execute os comandos:
-```bash
-npm install
-
-npm start
-```
-O Front-End estará disponível na porta 3000 -> `http://localhost:3000/`
 <br>
 
 
