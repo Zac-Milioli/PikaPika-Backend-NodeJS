@@ -1,4 +1,4 @@
-# Projeto PikaPika
+# PikaPika Backend NodeJS
 
 ## Feito por
 [Zac Milioli](https://www.linkedin.com/in/zac-milioli/), [Eduardo Kipper](https://www.linkedin.com/in/eduardo-kipper-3451771a4/), [Pedro Esmeraldino](https://www.linkedin.com/in/pedro-esmeraldino-922b82214/), [Gabriel Antônio Maida](https://www.linkedin.com/in/gabrielmaida/)
