@@ -1,0 +1,10 @@
+{
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["clover", "json", "lcov", "text"],
+    "testMatch": ["**/*.test.js"],
+    "verbose": true,
+    "openHandlesTimeout": 0
+  }
+  
