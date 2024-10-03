@@ -91,6 +91,30 @@ test('getPokemon deve retornar o pikachu', async () => {
     );
 });
 
+test('deve retornar null para cardImg quando a TCG API não retorna imagens', async () => {
+    // Mock da resposta da TCG API para não retornar dados
+    axios.get.mockImplementation((url) => {
+        if (url.includes('pokemontcg.io')) {
+            return Promise.resolve({ data: { data: [] } }); // Simula resposta sem imagens
+        }
+        return Promise.resolve(mockedPokeApiResponse); // Mock padrão da PokeAPI
+    });
+
+    const response = await getPokemon('pikachu');
+
+    expect(response).toStrictEqual({
+        status: 200,
+        response: {
+            cardImg: null, // Esperamos que cardImg seja null
+            message: 'Informações do Pokémon número 25',
+            pokemonNome: 'pikachu',
+            pokemonPokedex: 25,
+            pokemonTipo: ['electric'],
+            pokemonImg: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
+        }
+    });
+});
+
 // Teste para Pokémon não encontrado (Erro 404)
 test('getPokemon deve retornar 404 para Pokémon não encontrado', async () => {
     // Mockando a resposta para 404 da PokeAPI
