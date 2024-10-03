@@ -11,10 +11,16 @@ app.use(cors());
 
 let team = [] // Cria uma lista vazia para armazenar os Pokémons do time
 
-// Método para retornar a página inicial
-app.get('/', (req, res) => {
+
+
+// Rota que utiliza a função
+app.get('/', getIndexPage);
+
+// Função para enviar o arquivo index.html
+function getIndexPage(req, res) {
     res.sendFile('views/index.html', { root: __dirname });
-});
+}
+
 
 // Define um objeto com os integrantes do grupo
 const data = {
@@ -26,10 +32,13 @@ const data = {
     ]
 };
 
-// Método para retornar os integrantes do grupo
-app.get('/integrantes', (req, res) => {
+// Método para definir a rota dos integrantes
+app.get('/integrantes', getIntegrantes);
+
+// Função para retornar os integrantes do grupo
+function getIntegrantes(req, res) {
     res.json(data);
-});
+}
 
 // Método para buscar informações de um Pokémon
 app.get('/api/:keyword', async (req, res) => {
@@ -158,4 +167,4 @@ app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-module.exports = app;
+module.exports = {app, getPokemon, postPokemon, deletePokemon, team}
