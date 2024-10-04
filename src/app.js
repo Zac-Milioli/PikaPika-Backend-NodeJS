@@ -159,6 +159,14 @@ function deletePokemon (keyword) {
  }
 }
 
+var teste_test = 0
+
+function teste () {
+    console.log(teste_test)
+}
+
+teste()
+
 // Constante que armazena a porta do servidor
 const PORT = 3300;
 
