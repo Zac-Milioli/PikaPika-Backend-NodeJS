@@ -32,6 +32,9 @@ jobs:
       - name: Run Jest
         run: npm test
 
+      - name: Run ESLint
+        run: npm run lint
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
