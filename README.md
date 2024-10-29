@@ -12,7 +12,7 @@ Primeiramente, abra um terminal na raíz do projeto e execute os comandos:
 ```bash
 npm install
 
-node backend/src/app.js
+node src/app.js
 ```
 
 Com isso, o Back estará disponível e rodando na porta 3300 -> `http://localhost:3300/`.
