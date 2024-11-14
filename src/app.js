@@ -2,12 +2,24 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
 
 // Cria uma instância do express
 const app = express();
 
 // Configura o CORS para permitir requisições apenas da porta 4000
 app.use(cors());
+
+//connect mongodb
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(err => console.error('Could not connect to MongoDB Atlas', err));
+
+const users = require('./models/users');
+const teams = require('./models/teams');
+  
 
 let team = [] // Cria uma lista vazia para armazenar os Pokémons do time
 
