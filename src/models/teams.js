@@ -4,9 +4,9 @@ const teamSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     pokemons: [
         {
-            nome: { type: String, required: true },
-            tipo: [String],
-            img: String
+            id: { type: Number, required: true },
+            nome: {type: String},
+            img: {type: String}
         }
     ]
 });
