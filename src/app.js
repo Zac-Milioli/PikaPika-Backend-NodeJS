@@ -106,10 +106,10 @@ app.get('/user/:userId', async (req, res) => {
         ];
 
         if (!team) {
-            return res.status(404).json({team: emptyTeam});
+            return res.json({emptyTeam});
         }
 
-        res.json(team);
+        res.json(team.pokemons);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
     }
