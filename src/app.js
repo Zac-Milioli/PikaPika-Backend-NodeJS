@@ -69,7 +69,7 @@ app.get('/api/:idPokemon', async (req, res) => {
 // Endpoint para salvar o time do usuário
 app.post('/user/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const team = req.body.team;
+    const team = req.body;
 
     try {
         // Faz a busca pelo usuário
@@ -110,7 +110,7 @@ app.get('/user/:userId', async (req, res) => {
 
         if (!team) {
             var newTeam = await Teams.create({userId, emptyTeam}).then(() => {
-                res.json({team: emptyTeam});
+                res.json({'team': emptyTeam});
             });
             await Users.create({userId});
 
