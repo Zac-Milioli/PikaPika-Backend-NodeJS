@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const teamSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
-    pokemons: [
+    team: [
         {
             id: { type: Number, required: true },
             nome: {type: String},
