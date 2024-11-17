@@ -69,20 +69,23 @@ app.get('/api/:idPokemon', async (req, res) => {
 // Endpoint para salvar o time do usuário
 app.post('/user/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const pokemons = req.body;
+    const team = req.body.team;
 
     try {
         // Faz a busca pelo usuário
-        let user = await Users.findOne({ userId });
+        let time = await Teams.findOne({ userId});
 
-        // Cria o usuário se não existir
-        if (!user) {
-            user = await Users.create({ userId });
+        if (time) {  
+            time.team = team; 
+            await time.save(); 
+            return res.status(200).json({ message: 'Time atualizado com sucesso', time }); 
+        } else { 
+            // Cria um novo time
+            console.log({userId, team}); 
+            time = await Teams.create({ userId, team }); 
+
+            return res.status(201).json({ message: 'Time criado com sucesso', time });
         }
-
-        // Cria o time com o id do usuário e os pokémons
-        const team = await Teams.create({ userId, pokemons });
-        res.status(201).json({ message: 'Time criado com sucesso', team });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao criar time', error: error.message });
     }
@@ -106,10 +109,15 @@ app.get('/user/:userId', async (req, res) => {
         ];
 
         if (!team) {
-            return res.json({emptyTeam});
+            var newTeam = await Teams.create({userId, emptyTeam}).then(() => {
+                res.json({team: emptyTeam});
+            });
+            await Users.create({userId});
+
+            res.json({team: newTeam});
         }
 
-        res.json(team.pokemons);
+        res.json(team);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
     }
@@ -146,29 +154,6 @@ app.delete('/user/:userId', async (req, res) => {
         res.json({ message: 'Time deletado com sucesso', team: defaultTeam });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar time', error: error.message });
-    }
-});
-
-// Método para retornar o time com os Pokémons de um usuário
-app.get('/teams/:idUsuario', async (req, res) => {
-    try{
-        const idUsuario = req.params.idUsuario;
-
-        // Busca o time do usuário
-        const team = await Teams.findOne({ userId: idUsuario })
-            .then((team) => {
-                if (!team) {
-                    return res.status(404).json({ message: 'Time não encontrado' });
-                }
-            })
-            .catch((error) => {
-                res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
-            });
-
-        res.json(team);
-
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
     }
 });
 
