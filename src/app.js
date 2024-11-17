@@ -94,32 +94,21 @@ app.get('/user/:userId', async (req, res) => {
 
     try {
         // Busca o time do usuário
-        let team = await Teams.findOne({ userId });
+        const team = await Teams.findOne({ userId });
+
+        const emptyTeam = [
+            { id: 0, nome: "", img: "" },
+            { id: 1, nome: "", img: "" },
+            { id: 2, nome: "", img: "" },
+            { id: 3, nome: "", img: "" },
+            { id: 4, nome: "", img: "" },
+            { id: 5, nome: "", img: "" },
+        ];
 
         if (!team) {
-            // Verifica se o usuário existe
-            let user = await Users.findOne({ userId });
-
-            // Cria o usuário se não existir
-            if (!user) {
-                user = await Users.create({ userId });
-            }
-
-            // Cria um time vazio para o usuário
-            const emptyPokemons = [
-                { id: 0, nome: "", img: "" },
-                { id: 1, nome: "", img: "" },
-                { id: 2, nome: "", img: "" },
-                { id: 3, nome: "", img: "" },
-                { id: 4, nome: "", img: "" },
-                { id: 5, nome: "", img: "" },
-            ];
-
-            // Salva o time vazio no banco de dados
-            team = await Teams.create({ userId, pokemons: emptyPokemons });
+            return res.status(404).json({team: emptyTeam});
         }
 
-        // Retorna o time do usuário (existente ou recém-criado)
         res.json(team);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
@@ -138,6 +127,12 @@ app.delete('/user/:userId', async (req, res) => {
             return res.status(404).json({ message: 'Time não encontrado' });
         }
 
+        const deletedUser = await Users.findOneAndDelete({ userId });
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+        
         // Retorna a estrutura padrão do time
         const defaultTeam = [
             { id: 0, nome: "", img: "" },
