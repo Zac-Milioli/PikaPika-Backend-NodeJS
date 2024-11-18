@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-PORT = process.env.PORT;
+const PORT = process.env.PORT;
 
 //connect mongodb
 mongoose.connect(process.env.MONGODB_URI)
@@ -155,6 +155,10 @@ app.delete('/user/:userId', async (req, res) => {
 });
 
 // Inicia o servidor na porta especificada
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
+    });
+}
+
+module.exports = app; // Exporta o aplicativo
