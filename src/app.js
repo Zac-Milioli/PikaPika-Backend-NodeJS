@@ -69,7 +69,7 @@ app.get('/api/:idPokemon', async (req, res) => {
 // Endpoint para salvar o time do usuário
 app.post('/user/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const team = req.body;
+    const team = req.body.team;
 
     try {
         // Faz a busca pelo usuário
@@ -97,9 +97,9 @@ app.get('/user/:userId', async (req, res) => {
 
     try {
         // Busca o time do usuário
-        const team = await Teams.findOne({ userId });
+        const userTeam = await Teams.findOne({ userId });
 
-        const emptyTeam = [
+        const team = [
             { id: 0, nome: "", img: "" },
             { id: 1, nome: "", img: "" },
             { id: 2, nome: "", img: "" },
@@ -108,16 +108,13 @@ app.get('/user/:userId', async (req, res) => {
             { id: 5, nome: "", img: "" },
         ];
 
-        if (!team) {
-            var newTeam = await Teams.create({userId, emptyTeam}).then(() => {
-                res.json({'team': emptyTeam});
-            });
+        if (!userTeam) {
             await Users.create({userId});
-
-            res.json({team: newTeam});
+            var newTeam = await Teams.create({userId, team});
+            return res.json(newTeam);
         }
 
-        res.json(team);
+        return res.json(userTeam);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
     }
