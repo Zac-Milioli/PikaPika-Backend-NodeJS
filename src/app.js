@@ -19,32 +19,33 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('Could not connect to MongoDB Atlas', err));
 
-// Método para retornar a página inicial
+//retorna pagina inicial
 app.get('/', (req, res) => {
     res.sendFile('views/index.html', { root: __dirname });
 });
 
-// Define um objeto com os integrantes do grupo
+//integrantes do grupo
 const data = {
     integrantes: [
         { nome: 'Zac Milioli' },
         { nome: 'Eduardo Kipper' },
         { nome: 'Pedro Esmeraldino' },
-        { nome: 'Gabriel Antônio' }
+        { nome: 'Gabriel Antônio' },
+        { nome: 'Guilherme Gomes' }
     ]
 };
 
-// Método para retornar os integrantes do grupo
+//metodo chamar integrantes
 app.get('/integrantes', (req, res) => {
     res.json(data);
 });
 
-// Método para buscar informações de um Pokémon
+//metodo buscar pokemons
 app.get('/api/:idPokemon', async (req, res) => {
-    const idPokemon = req.params.idPokemon; // Armazena o parâmetro da URL em uma variável
+    const idPokemon = req.params.idPokemon; 
     try {
-        const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`); // Faz a requisição para a API do Pokémon
-        const pokemonData = pokeApi.data; // Armazena os dados do Pokémon
+        const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`);
+        const pokemonData = pokeApi.data;
 
         // Extrai as informações necessárias do Pokémon
         const pokemonNome = pokemonData.name;
@@ -77,7 +78,7 @@ app.post('/user/:userId', async (req, res) => {
 
         if (time) {  
             time.team = team; 
-            await time.save(); 
+            await time.save();
             return res.status(200).json({ message: 'Time atualizado com sucesso', time }); 
         } else { 
             // Cria um novo time

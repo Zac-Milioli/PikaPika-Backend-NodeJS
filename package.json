@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "jest --coverage --forceExit --detectOpenHandles",
-    "lint": "eslint src/*.js"
+    "lint": "eslint src/app.js"
   },
   "repository": {
     "type": "git",
