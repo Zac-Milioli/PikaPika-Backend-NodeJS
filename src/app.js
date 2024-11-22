@@ -8,51 +8,44 @@ require('dotenv').config();
 const Users = require('./models/users');
 const Teams = require('./models/teams');
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT;
 
 //connect mongodb
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('Could not connect to MongoDB Atlas', err));
-  
 
-let team = [] // Cria uma lista vazia para armazenar os Pokémons do time
-
-// Método para retornar a página inicial
+//retorna pagina inicial
 app.get('/', (req, res) => {
     res.sendFile('views/index.html', { root: __dirname });
 });
 
-// Define um objeto com os integrantes do grupo
+//integrantes do grupo
 const data = {
     integrantes: [
         { nome: 'Zac Milioli' },
         { nome: 'Eduardo Kipper' },
         { nome: 'Pedro Esmeraldino' },
-        { nome: 'Gabriel Antônio' }
+        { nome: 'Gabriel Antônio' },
+        { nome: 'Guilherme Gomes' }
     ]
 };
 
-// Método para retornar os integrantes do grupo
+//metodo chamar integrantes
 app.get('/integrantes', (req, res) => {
     res.json(data);
 });
 
-// Método para buscar informações de um Pokémon
-app.get('/api/:keyword', async (req, res) => {
-    const { keyword } = req.params; // Armazena o parâmetro da URL em uma variável
+//metodo buscar pokemons
+app.get('/api/:idPokemon', async (req, res) => {
+    const idPokemon = req.params.idPokemon; 
     try {
-        const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`); // Faz a requisição para a API do Pokémon
-        const pokemonData = pokeApi.data; // Armazena os dados do Pokémon
-
-        // const tcgApi = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:${pokemonData.name}`)
-        // const tcgData = tcgApi.data
-
-
+        const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`);
+        const pokemonData = pokeApi.data;
 
         // Extrai as informações necessárias do Pokémon
         const pokemonNome = pokemonData.name;
@@ -74,147 +67,99 @@ app.get('/api/:keyword', async (req, res) => {
     }
 });
 
-// Método para adicionar um Pokémon ao time
-app.post('/api/:keyword', async (req, res) => {
-    const { keyword } = req.params;
-
-    // Verifica se o time já possui 6 Pokémons
-    if (team.length >= 6) {
-        return res.status(409).json({ message: 'Seu time já possui o limite de 6 Pokémons.', team });
-    }
+// Endpoint para salvar o time do usuário
+app.post('/user/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const team = req.body.team;
 
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${keyword}`);
-        const pokemonData = response.data;
+        // Faz a busca pelo usuário
+        let time = await Teams.findOne({ userId});
 
-        const pokemonNome = pokemonData.name;
-        const pokemonTipo = pokemonData.types.map(typeInfo => typeInfo.type.name);
-        const pokemonImg = pokemonData.sprites.front_default;
+        if (time) {  
+            time.team = team; 
+            await time.save();
+            return res.status(200).json({ message: 'Time atualizado com sucesso', time }); 
+        } else { 
+            // Cria um novo time
+            console.log({userId, team}); 
+            time = await Teams.create({ userId, team }); 
 
-        // Variável onde são armazenados os dados (nome, tipo e img) do Pokémon
-        let pokemon = {
-            nome: pokemonNome,
-            tipo: pokemonTipo,
-            img: pokemonImg
-        };
-        team.push(pokemon); // Adiciona o Pokémon na lista team
-
-        res.status(201).json({ message: 'Pokémon adicionado ao time com sucesso', team });
+            return res.status(201).json({ message: 'Time criado com sucesso', time });
+        }
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao adicionar Pokémon ao time', error: error.message });
+        res.status(500).json({ message: 'Erro ao criar time', error: error.message });
     }
 });
 
-// Método para retornar o time com os Pokémons
-app.get('/team', (req, res) => {
-    res.json(team);
-});
-
-// Método para remover um Pokémon do time
-app.delete('/team/:nomePokemon', (req, res) => {
-    const { nomePokemon } = req.params;
-
-    // Procura o Pokémon no time e armazena seu índice
-    // O índice -1 indica que o Pokémon não foi encontrado
-    const index = team.findIndex(pokemon => pokemon.nome === nomePokemon);
-
-    // Verifica se o Pokémon foi encontrado
-    if (index !== -1) {
-        // Remove o Pokémon do array
-        team.splice(index, 1);
-
-        res.json({ message: nomePokemon+' removido do time com sucesso', team });
-    } else {
-        res.status(404).json({ message: 'Pokémon não encontrado' });
-    }
-});
-
-var teste_test = 0
-
-function teste () {
-    console.log(teste_test)
-}
-
-teste()
-
-// Constante que armazena a porta do servidor
-const PORT = 3300;
-
-// Inicia o servidor na porta especificada
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
-
-app.get('/users/:userId', async (req, res) => {
-    const { userId } = req.params;
-    
-    try {
-      const user = await Users.findById(userId); // Busca o usuário pelo ID na coleção 'users'
-      if (!user) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
-      }
-      res.json(user); // Retorna os dados do usuário
-    } catch (error) {
-      res.status(500).json({ message: 'Erro ao buscar usuário', error: error.message });
-    }
-  });
-
-
-  app.post('/users/:userId', async (req, res) => {
-    const { userId } = req.params;
-    const { pokemons } = req.body;
-
-    // Verifica se o array de Pokémon é válido e contém até 6 nomes
-    if (!pokemons || !Array.isArray(pokemons) || pokemons.length > 6) {
-        return res.status(400).json({ message: 'Por favor, envie uma lista de até 6 Pokémons' });
-    }
+// Endpoint para retornar o time de um usuário específico
+app.get('/user/:userId', async (req, res) => {
+    const userId = req.params.userId;
 
     try {
-        // Verifica se o usuário já existe pelo userId
-        const updatedUser = await Users.findOneAndUpdate(
-            { userId },
-            { new: true, upsert: true } // Cria um userid se não existir
-        );
-        
-        // Se o usuário não existir, cria um novo documento de usuário
-        // if (!user) {
-        //     user = new Users({ userId });
-        //     await user.save();
-        // }
+        // Busca o time do usuário
+        const userTeam = await Teams.findOne({ userId });
 
-        
-        // Atualiza ou cria o time associado ao userId
-        const updatedTeam = await Teams.findOneAndUpdate(
-            { userId },
-            { userId, pokemons },
-            { new: true, upsert: true } // Cria um novo time se não existir
-        );
-        
-        res.status(201).json({ message: 'Time de Pokémon e usuário atualizados com sucesso', team: updatedTeam, user: updatedUser });
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao inserir ou atualizar time de Pokémon', error: error.message });
-    }
-});
+        const team = [
+            { id: 0, nome: "", img: "" },
+            { id: 1, nome: "", img: "" },
+            { id: 2, nome: "", img: "" },
+            { id: 3, nome: "", img: "" },
+            { id: 4, nome: "", img: "" },
+            { id: 5, nome: "", img: "" },
+        ];
 
-
-app.get('/users/:userId', async (req, res) => {
-    const { userId } = req.params.userId;
-
-    try {
-        // Busca o usuário pelo campo `userId`
-        const user = await Users.findOne({ userId });
-        if (!user) {
-            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        if (!userTeam) {
+            await Users.create({userId});
+            var newTeam = await Teams.create({userId, team});
+            return res.json(newTeam);
         }
 
-        // Busca o time de Pokémons associado ao userId
-        const team = await Teams.findOne({ userId });
-
-        // Retorna o usuário e o time (ou uma mensagem caso o time não exista)
-        res.status(200).json({
-            pokemons: team ? team.pokemons : []
-        });
+        return res.json(userTeam);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar usuário e time de Pokémon', error: error.message });
+        res.status(500).json({ message: 'Erro ao buscar time', error: error.message });
     }
 });
+
+// Endpoint para deletar o time de um usuário
+app.delete('/user/:userId', async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        // Deleta o time do usuário
+        const deletedTeam = await Teams.findOneAndDelete({ userId });
+
+        if (!deletedTeam) {
+            return res.status(404).json({ message: 'Time não encontrado' });
+        }
+
+        const deletedUser = await Users.findOneAndDelete({ userId });
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+        
+        // Retorna a estrutura padrão do time
+        const defaultTeam = [
+            { id: 0, nome: "", img: "" },
+            { id: 1, nome: "", img: "" },
+            { id: 2, nome: "", img: "" },
+            { id: 3, nome: "", img: "" },
+            { id: 4, nome: "", img: "" },
+            { id: 5, nome: "", img: "" },
+        ];
+
+        res.json({ message: 'Time deletado com sucesso', team: defaultTeam });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao deletar time', error: error.message });
+    }
+});
+
+// Inicia o servidor na porta especificada
+if (require.main === module) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
+    });
+}
+
+module.exports = app; // Exporta o aplicativo
