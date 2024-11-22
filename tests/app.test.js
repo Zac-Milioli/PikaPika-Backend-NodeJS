@@ -18,17 +18,17 @@ describe('Testes do app.js', () => {
     //     await Users.deleteMany({});
     // });
 
-    test('GET / deve retornar a página inicial', async () => {
-        const response = await request(app).get('/');
-        expect(response.statusCode).toBe(200);
-    });
-
-    // test('GET /integrantes deve retornar os integrantes do grupo', async () => {
-    //     const response = await request(app).get('/integrantes');
+    // test('GET / deve retornar a página inicial', async () => {
+    //     const response = await request(app).get('/');
     //     expect(response.statusCode).toBe(200);
-    //     expect(response.body).toHaveProperty('integrantes');
-    //     expect(response.body.integrantes.length).toBe(4);
     // });
+
+    test('GET /integrantes deve retornar os integrantes do grupo', async () => {
+        const response = await request(app).get('/integrantes');
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveProperty('integrantes');
+        expect(response.body.integrantes.length).toBe(4);
+    });
 
     // test('GET /api/:idPokemon deve retornar informações do Pokémon', async () => {
     //     const response = await request(app).get('/api/1'); // Testando com o Pokémon Bulbasaur
