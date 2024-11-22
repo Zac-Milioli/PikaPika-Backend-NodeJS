@@ -27,7 +27,7 @@ describe('Testes do app.js', () => {
         const response = await request(app).get('/integrantes');
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('integrantes');
-        expect(response.body.integrantes.length).toBe(4);
+        expect(response.body.integrantes.length).toBe(5);
     });
 
     // test('GET /api/:idPokemon deve retornar informações do Pokémon', async () => {
