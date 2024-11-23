@@ -1,10 +1,10 @@
-name: CD
+name: CD - Continuous Delivery
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
   workflow_dispatch:
 
@@ -29,7 +29,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: ./*
-          remote_path: /opt/cesusc-devops/ # Pasta onde está o nosso projeto
-          remote_host: <IP Publico da Instancia> # Aqui vai o IP da instância EC2
+          remote_path: /opt/aplicacao-devops/ # Pasta onde está o nosso projeto
+          remote_host: "15.229.2.46" # Aqui vai o IP da instância EC2
           remote_user: ubuntu
           remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
