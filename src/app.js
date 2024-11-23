@@ -35,7 +35,7 @@ const data = {
     ]
 };
 
-console.log("teste")
+console.log("teste1")
 
 //metodo chamar integrantes
 app.get('/integrantes', (req, res) => {
