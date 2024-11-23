@@ -30,18 +30,18 @@ describe('Testes do app.js', () => {
         expect(response.body.integrantes.length).toBe(5);
     });
 
-    // test('GET /api/:idPokemon deve retornar informações do Pokémon', async () => {
-    //     const response = await request(app).get('/api/1'); // Testando com o Pokémon Bulbasaur
-    //     expect(response.statusCode).toBe(200);
-    //     expect(response.body).toHaveProperty('pokemonNome');
-    //     expect(response.body).toHaveProperty('pokemonPokedex');
-    // });
+    test('GET /api/:idPokemon deve retornar informações do Pokémon', async () => {
+        const response = await request(app).get('/api/1'); // Testando com o Pokémon Bulbasaur
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveProperty('pokemonNome');
+        expect(response.body).toHaveProperty('pokemonPokedex');
+    });
 
-    // test('GET /api/:idPokemon deve retornar 404 se Pokémon não encontrado', async () => {
-    //     const response = await request(app).get('/api/9999'); // Pokémon que não existe
-    //     expect(response.statusCode).toBe(404);
-    //     expect(response.body).toHaveProperty('message', 'Pokémon não encontrado na PokeAPI');
-    // });
+    test('GET /api/:idPokemon deve retornar 404 se Pokémon não encontrado', async () => {
+        const response = await request(app).get('/api/9999'); // Pokémon que não existe
+        expect(response.statusCode).toBe(404);
+        expect(response.body).toHaveProperty('message', 'Pokémon não encontrado na PokeAPI');
+    });
 
     // test('POST /user/:userId deve criar um novo time', async () => {
     //     const response = await request(app)
